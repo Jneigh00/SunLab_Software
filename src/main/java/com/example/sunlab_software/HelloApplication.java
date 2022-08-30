@@ -21,14 +21,13 @@ import javafx.event.*;
 
 public class HelloApplication extends Application {
 
-    @FXML
-    TextField username;
-    @FXML
-    TextField password;
-    @FXML
-    Button signIn;
-    @FXML
-    Label connected;
+    @FXML TextField username;
+    @FXML TextField password;
+    @FXML Button signIn;
+    @FXML Label connected;
+
+    @FXML ChoiceBox<String> menuChoice;
+    @FXML Button confirmChoice;
 
     public static Connection conn;
     public static OracleDataSource ods;
@@ -57,7 +56,41 @@ public class HelloApplication extends Application {
         conn = ods.getConnection();
         System.out.println("Connected ");
         connected.setText("Connected");
+
+        Stage stage = new Stage();
+        FXMLLoader loginPage = new FXMLLoader(HelloApplication.class.getResource("menu.fxml"));
+        loginPage.setController(this);
+        Parent root = loginPage.load();
+        Scene scene = new Scene(root, 600, 400);
+        stage.setTitle("Menu");
+        stage.setScene(scene);
+        stage.show();
+        menu();
     }
 
+    @FXML
+    public void confirmAction() throws Exception{
+        String userChoice = menuChoice.getValue();
+        Statement stmt = conn.createStatement();
+        Scanner scan = new Scanner(System.in);
+
+        switch (userChoice){
+            case "Search by ID":
+                break;
+            case "Search by Date":
+                break;
+            case "Search by Time Range":
+                break;
+            case "Update Student Status":
+                break;
+            case "Browse all Logs":
+                break;
+        }
+    }
+
+    public void menu() throws SQLException, IOException {
+        String[] whatToDo = {"Search by ID", "Search by Date", "Search by Time Range", "Update Student Status", "Browse all Logs"};
+        menuChoice.getItems().addAll(whatToDo);
+    }
 
 }

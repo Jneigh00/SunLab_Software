@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" >
+   <center>
+      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <ChoiceBox fx:id="menuChoice" layoutX="225.0" layoutY="188.0" prefWidth="150.0" />
+            <Label layoutX="197.0" layoutY="161.0" prefHeight="27.0" prefWidth="207.0" text="Please Select an Option:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Button fx:id="confirmChoice" layoutX="271.0" layoutY="281.0" mnemonicParsing="false" onAction="#confirmAction" text="Confirm" />
+         </children>
+      </Pane>
+   </center>
+</BorderPane>
