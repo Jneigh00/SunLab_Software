@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="594.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <TableView fx:id="browseLogs" prefHeight="400.0" prefWidth="594.0">
+              <columns>
+                <TableColumn fx:id="IdCol" prefWidth="127.0" text="ID" />
+                <TableColumn fx:id="NameCol" prefWidth="114.0" text="Name" />
+                  <TableColumn fx:id="JobCol" prefWidth="97.0" text="Job" />
+                  <TableColumn fx:id="DateCol" prefWidth="129.0" text="DATE_OF_ENTER" />
+                  <TableColumn fx:id="TImeCol" prefWidth="126.0" text="TIME_OF_ENTER" />
+              </columns>
+            </TableView>
+         </children>
+      </Pane>
+   </center>
+</BorderPane>
