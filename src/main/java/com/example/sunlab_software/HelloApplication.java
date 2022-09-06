@@ -12,14 +12,8 @@ import java.util.Scanner;
 import javafx.application.Application;
 import javafx.scene.*;
 import javafx.scene.control.*;
-import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.fxml.*;
-import javafx.event.*;
-
-
-
-
 
 
 public class HelloApplication extends Application {
@@ -99,6 +93,24 @@ public class HelloApplication extends Application {
                 stage.setTitle("Search by ID");
                 stage.setScene(scene);
                 stage.show();
+
+                ResultSet browseID = stmt.executeQuery("Select * from SunLabLogs");
+                ResultSetMetaData browseIDData = browseID.getMetaData();
+                browseLogs.getColumns().clear();
+                data.clear();
+                while(browseID.next()) {
+                    Logs current = new Logs(browseID.getString(1), browseID.getString(2), browseID.getString(3), browseID.getString(4),
+                            browseID.getString(5));
+                    data.add(current);
+                }
+                IdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+                NameCol.setCellValueFactory(new PropertyValueFactory<>("Name"));
+                JobCol.setCellValueFactory(new PropertyValueFactory<>("Job"));
+                DateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
+                TImeCol.setCellValueFactory(new PropertyValueFactory<>("time"));
+                browseLogs.setItems(data);
+                browseLogs.getColumns().addAll(IdCol, NameCol, JobCol, DateCol, TImeCol);
+
                 break;
             case "Search by Date":
                 Stage stage1 = new Stage();
@@ -109,6 +121,24 @@ public class HelloApplication extends Application {
                 stage1.setTitle("Search by Date");
                 stage1.setScene(scene1);
                 stage1.show();
+
+                ResultSet browseDate = stmt.executeQuery("Select * from SunLabLogs");
+                ResultSetMetaData browseDateData = browseDate.getMetaData();
+                browseLogs.getColumns().clear();
+                data.clear();
+                while(browseDate.next()) {
+                    Logs current = new Logs(browseDate.getString(1), browseDate.getString(2), browseDate.getString(3), browseDate.getString(4),
+                            browseDate.getString(5));
+                    data.add(current);
+                }
+                IdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+                NameCol.setCellValueFactory(new PropertyValueFactory<>("Name"));
+                JobCol.setCellValueFactory(new PropertyValueFactory<>("Job"));
+                DateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
+                TImeCol.setCellValueFactory(new PropertyValueFactory<>("time"));
+                browseLogs.setItems(data);
+                browseLogs.getColumns().addAll(IdCol, NameCol, JobCol, DateCol, TImeCol);
+
                 break;
             case "Search by Time Range":
                 Stage stage2 = new Stage();
@@ -119,6 +149,25 @@ public class HelloApplication extends Application {
                 stage2.setTitle("Search by Time Range");
                 stage2.setScene(scene2);
                 stage2.show();
+
+                ResultSet browseRange = stmt.executeQuery("Select * from SunLabLogs");
+                ResultSetMetaData browseRangeData = browseRange.getMetaData();
+                browseLogs.getColumns().clear();
+                data.clear();
+                while(browseRange.next()) {
+                    Logs current = new Logs(browseRange.getString(1), browseRange.getString(2), browseRange.getString(3), browseRange.getString(4),
+                            browseRange.getString(5));
+                    data.add(current);
+                }
+                IdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+                NameCol.setCellValueFactory(new PropertyValueFactory<>("Name"));
+                JobCol.setCellValueFactory(new PropertyValueFactory<>("Job"));
+                DateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
+                TImeCol.setCellValueFactory(new PropertyValueFactory<>("time"));
+                browseLogs.setItems(data);
+                browseLogs.getColumns().addAll(IdCol, NameCol, JobCol, DateCol, TImeCol);
+
+
                 break;
             case "Update Student Status":
                 Stage stage3 = new Stage();
@@ -172,19 +221,89 @@ public class HelloApplication extends Application {
 
     @FXML
     public void searchID() throws Exception{
+        String idToSearch = IdSearch.getText();
+        Statement stmt = conn.createStatement();
+        ResultSet browseID = stmt.executeQuery("SELECT  * from SunLabLogs where s_id like '%"  + idToSearch + "%'");
 
+        ResultSetMetaData browseIDData = browseID.getMetaData();
+        browseLogs.getColumns().clear();
+        data.clear();
+        while(browseID.next()) {
+            Logs current = new Logs(browseID.getString(1), browseID.getString(2), browseID.getString(3), browseID.getString(4),
+                    browseID.getString(5));
+            data.add(current);
+        }
+        IdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        NameCol.setCellValueFactory(new PropertyValueFactory<>("Name"));
+        JobCol.setCellValueFactory(new PropertyValueFactory<>("Job"));
+        DateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
+        TImeCol.setCellValueFactory(new PropertyValueFactory<>("time"));
+        browseLogs.setItems(data);
+        browseLogs.getColumns().addAll(IdCol, NameCol, JobCol, DateCol, TImeCol);
     }
 
+    @FXML TextField dateSearch;
+    @FXML
+    public void searchDate() throws Exception{
+        String dateToSearch = dateSearch.getText();
+        Statement stmt = conn.createStatement();
+        ResultSet browseDate = stmt.executeQuery("Select * from SunLabLogs where DATE_OF_ENTER like TO_DATE( '" + dateToSearch + "', 'YYYY-MM-DD')");
 
+        browseLogs.getColumns().clear();
+        data.clear();
+        while(browseDate.next()) {
+            Logs current = new Logs(browseDate.getString(1), browseDate.getString(2), browseDate.getString(3), browseDate.getString(4),
+                    browseDate.getString(5));
+            data.add(current);
+        }
+        IdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        NameCol.setCellValueFactory(new PropertyValueFactory<>("Name"));
+        JobCol.setCellValueFactory(new PropertyValueFactory<>("Job"));
+        DateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
+        TImeCol.setCellValueFactory(new PropertyValueFactory<>("time"));
+        browseLogs.setItems(data);
+        browseLogs.getColumns().addAll(IdCol, NameCol, JobCol, DateCol, TImeCol);
+    }
+
+    @FXML TextField updateID;
 
     @FXML
-    public void suspendStudent(){
-
+    public void suspendStudent() throws SQLException {
+        String statusToUpdate = updateID.toString();
+        Statement statement = conn.createStatement();
+        statement.executeQuery("Update accessTable Set allowed = '" + "suspenended" + "' where s_id like '%" + statusToUpdate + "%'" );
     }
 
     @FXML
-    public void activateStudent(){
-
+    public void activateStudent() throws SQLException {
+        String statusToUpdate = updateID.toString();
+        Statement statement = conn.createStatement();
+        statement.executeQuery("Update accessTable Set allowed = '" + "activated" + "' where s_id like '%" + statusToUpdate + "%'" );
     }
 
+
+    @FXML TextField dateOne, dateTwo;
+    @FXML
+    public void searchRange() throws SQLException {
+        String fromDate = dateOne.getText();
+        String toDate = dateTwo.getText();
+        Statement stmt = conn.createStatement();
+
+        ResultSet browseRange = stmt.executeQuery("Select * From SunLabLogs Where DATE_OF_ENTER BETWEEN TO_DATE('" + fromDate + "', 'YYYY-MM-DD') and TO_DATE('"  + toDate + "', 'YYYY-MM-DD')");
+        ResultSetMetaData browseRangeData = browseRange.getMetaData();
+        browseLogs.getColumns().clear();
+        data.clear();
+        while(browseRange.next()) {
+            Logs current = new Logs(browseRange.getString(1), browseRange.getString(2), browseRange.getString(3), browseRange.getString(4),
+                    browseRange.getString(5));
+            data.add(current);
+        }
+        IdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        NameCol.setCellValueFactory(new PropertyValueFactory<>("Name"));
+        JobCol.setCellValueFactory(new PropertyValueFactory<>("Job"));
+        DateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
+        TImeCol.setCellValueFactory(new PropertyValueFactory<>("time"));
+        browseLogs.setItems(data);
+        browseLogs.getColumns().addAll(IdCol, NameCol, JobCol, DateCol, TImeCol);
+    }
 }
