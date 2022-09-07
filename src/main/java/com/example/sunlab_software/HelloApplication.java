@@ -306,4 +306,20 @@ public class HelloApplication extends Application {
         browseLogs.setItems(data);
         browseLogs.getColumns().addAll(IdCol, NameCol, JobCol, DateCol, TImeCol);
     }
+
+
+
+    @FXML Button badge;
+    @FXML
+    public void simulateSwipe() throws SQLException {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Please Swipe Badge: ");
+        String swipeID = sc.next();
+        swipeID = swipeID.substring(2,12);
+
+        Statement stmt = conn.createStatement();
+        stmt.executeQuery("Insert into insert into SunLabLogs values('" + swipeID + "', 'Tester Testing', 'STU', SYSDATE, SYSTIMESTAMP");
+
+    }
 }
