@@ -316,10 +316,10 @@ public class HelloApplication extends Application {
 
         System.out.println("Please Swipe Badge: ");
         String swipeID = sc.next();
-        swipeID = swipeID.substring(2,12);
+        swipeID = swipeID.substring(2,11);
 
         Statement stmt = conn.createStatement();
-        stmt.executeQuery("Insert into insert into SunLabLogs values('" + swipeID + "', 'Tester Testing', 'STU', SYSDATE, SYSTIMESTAMP");
+        stmt.executeQuery("Insert into SunLabLogs values('" + swipeID + "', 'Tester Testing', 'STU', SYSDATE, SYSTIMESTAMP)");
 
     }
 }
